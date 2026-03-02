@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXPENSE.io</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════ LOGIN PAGE ══════════ -->
+<div id="loginPage" class="page active">
+  <div class="auth-bg"></div>
+  <div class="auth-grid"></div>
+  <div class="auth-orb orb1"></div>
+  <div class="auth-orb orb2"></div>
+  <div class="auth-orb orb3"></div>
+  <div class="auth-wrap">
+    <div class="auth-logo">
+      <div class="logo-mark">⇄</div>
+      <h1>EXPENSE<span>.io</span></h1>
+      <p>Smart expense management for modern teams</p>
+    </div>
+    <div class="role-switcher">
+      <div class="role-track">
+        <button class="role-btn active" id="roleEmpBtn" onclick="setRole('employee')">
+          <i class="fas fa-user"></i><span>Employee</span>
+        </button>
+        <button class="role-btn" id="roleMgrBtn" onclick="setRole('manager')">
+          <i class="fas fa-shield-alt"></i><span>Manager</span>
+        </button>
+      </div>
+    </div>
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin"  onclick="switchTab('login')">Sign In</button>
+        <button class="auth-tab"        id="tabSignup" onclick="switchTab('signup')">Sign Up</button>
+        <div class="tab-ink" id="tabInk"></div>
+      </div>
+      <!-- LOGIN FORM -->
+      <div id="loginForm">
+        <div class="role-tag" id="loginRoleTag"><i class="fas fa-user"></i> Employee Login</div>
+        <div class="form-group"><label>Email or Username</label>
+          <div class="input-wrap"><i class="fas fa-envelope"></i><input type="text" id="loginEmail" placeholder="Enter your email" onkeydown="if(event.key==='Enter')handleLogin()"></div></div>
+        <div class="form-group"><label>Password</label>
+          <div class="input-wrap"><i class="fas fa-lock"></i><input type="password" id="loginPassword" placeholder="••••••••••" onkeydown="if(event.key==='Enter')handleLogin()"></div></div>
+        <button class="btn-auth" onclick="handleLogin()"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+        <p class="auth-switch">Don't have an account? <a onclick="switchTab('signup')">Sign Up</a></p>
+      </div>
+      <!-- SIGNUP FORM -->
+      <div id="signupForm" style="display:none;">
+        <div class="role-tag" id="signupRoleTag"><i class="fas fa-user"></i> Employee Sign Up</div>
+        <div class="form-group"><label>Full Name</label>
+          <div class="input-wrap"><i class="fas fa-user"></i><input type="text" id="signupName" placeholder="Your full name"></div></div>
+        <div class="form-group"><label>Email</label>
+          <div class="input-wrap"><i class="fas fa-envelope"></i><input type="email" id="signupEmail" placeholder="your@email.com"></div></div>
+        <div class="form-group"><label>Password</label>
+          <div class="input-wrap"><i class="fas fa-lock"></i><input type="password" id="signupPassword" placeholder="Min 6 characters"></div></div>
+        <div class="form-group"><label>Confirm Password</label>
+          <div class="input-wrap"><i class="fas fa-lock"></i><input type="password" id="signupConfirm" placeholder="Repeat password"></div></div>
+        <div class="form-group" id="mgrCodeGroup" style="display:none;">
+          <label>Manager Access Code <span class="req">Required</span></label>
+          <div class="input-wrap"><i class="fas fa-key"></i><input type="password" id="mgrCode" placeholder="Enter manager access code"></div>
+          <p class="field-hint">Ask your admin for this code. Default demo: <b>MGR2024</b></p>
+        </div>
+        <button class="btn-auth" onclick="handleSignup()"><i class="fas fa-user-plus"></i> Create Account</button>
+        <p class="auth-switch">Already have an account? <a onclick="switchTab('login')">Sign In</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ ONBOARDING ══════════ -->
+<div id="onboardingPage" class="page">
+  <div class="auth-bg"></div><div class="auth-grid"></div>
+  <div class="auth-orb orb1"></div><div class="auth-orb orb2"></div>
+  <div class="auth-wrap" style="padding:20px 0 40px;">
+    <div class="auth-logo" style="margin-bottom:20px;">
+      <div class="logo-mark" style="font-size:22px;">⇄</div>
+      <h1 style="font-size:26px;">EXP<span>ensio</span></h1>
+      <p>Complete your profile setup</p>
+    </div>
+    <div style="width:100%;max-width:520px;margin:0 auto 20px;">
+      <div class="progress-bar-wrap"><div class="progress-fill" id="progressFill" style="width:25%"></div></div>
+      <div class="step-labels">
+        <span>Personal</span><span>Work</span><span>Address</span><span>Preferences</span>
+      </div>
+    </div>
+    <div class="auth-card" style="padding:28px 32px;">
+      <!-- Step 1 -->
+      <div id="step1" class="step-pane active">
+        <h3 class="step-h">Personal Information</h3>
+        <div class="form-group"><label>Phone Number</label><div class="input-wrap"><i class="fas fa-phone"></i><input type="tel" id="onboardPhone" placeholder="+1 555 000-0000"></div></div>
+        <div class="form-group"><label>Date of Birth</label><div class="input-wrap"><i class="fas fa-calendar"></i><input type="date" id="onboardDOB"></div></div>
+        <div class="form-group"><label>Gender</label><div class="input-wrap"><i class="fas fa-venus-mars"></i><select id="onboardGender" class="sel-pad"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option></select></div></div>
+        <button class="btn-auth" onclick="nextStep(2)">Next <i class="fas fa-arrow-right"></i></button>
+      </div>
+      <!-- Step 2 -->
+      <div id="step2" class="step-pane">
+        <h3 class="step-h">Professional Details</h3>
+        <div class="form-group"><label>Company Name</label><div class="input-wrap"><i class="fas fa-building"></i><input type="text" id="onboardCompany" placeholder="Your company"></div></div>
+        <div class="form-group"><label>Department</label><div class="input-wrap"><i class="fas fa-sitemap"></i><select id="onboardDepartment" class="sel-pad"><option value="">Select</option><option>Marketing</option><option>Sales</option><option>Operations</option><option>Finance</option><option>HR</option><option>IT</option><option>Other</option></select></div></div>
+        <div class="form-group"><label>Job Title</label><div class="input-wrap"><i class="fas fa-briefcase"></i><input type="text" id="onboardJobTitle" placeholder="e.g. Marketing Manager"></div></div>
+        <div class="form-group"><label>Employee ID <span style="color:var(--muted);font-size:11px;">(Optional)</span></label><div class="input-wrap"><i class="fas fa-id-card"></i><input type="text" id="onboardEmployeeID" placeholder="EMP-001"></div></div>
+        <div class="step-btns"><button class="btn-secondary" onclick="prevStep(1)"><i class="fas fa-arrow-left"></i> Back</button><button class="btn-auth" onclick="nextStep(3)">Next <i class="fas fa-arrow-right"></i></button></div>
+      </div>
+      <!-- Step 3 -->
+      <div id="step3" class="step-pane">
+        <h3 class="step-h">Address Information</h3>
+        <div class="form-group"><label>Street Address</label><div class="input-wrap"><i class="fas fa-map-marker-alt"></i><input type="text" id="onboardAddress" placeholder="123 Main Street"></div></div>
+        <div class="two-col-grid">
+          <div class="form-group"><label>City</label><div class="input-wrap"><i class="fas fa-city"></i><input type="text" id="onboardCity" placeholder="City"></div></div>
+          <div class="form-group"><label>State</label><div class="input-wrap"><i class="fas fa-map"></i><input type="text" id="onboardState" placeholder="State"></div></div>
+        </div>
+        <div class="two-col-grid">
+          <div class="form-group"><label>Postal Code</label><div class="input-wrap"><i class="fas fa-mail-bulk"></i><input type="text" id="onboardPostal" placeholder="12345"></div></div>
+          <div class="form-group"><label>Country</label><div class="input-wrap"><i class="fas fa-globe"></i><input type="text" id="onboardCountry" placeholder="Country"></div></div>
+        </div>
+        <div class="step-btns"><button class="btn-secondary" onclick="prevStep(2)"><i class="fas fa-arrow-left"></i> Back</button><button class="btn-auth" onclick="nextStep(4)">Next <i class="fas fa-arrow-right"></i></button></div>
+      </div>
+      <!-- Step 4 -->
+      <div id="step4" class="step-pane">
+        <h3 class="step-h">Preferences</h3>
+        <div class="form-group"><label>Default Currency</label><div class="input-wrap"><i class="fas fa-coins"></i><select id="onboardCurrency" class="sel-pad"><option>EUR (€)</option><option>USD ($)</option><option>GBP (£)</option><option>JPY (¥)</option><option>INR (₹)</option></select></div></div>
+        <div class="form-group"><label>Expense Approval Threshold (€)</label><div class="input-wrap"><i class="fas fa-euro-sign"></i><input type="number" id="onboardThreshold" value="500"></div></div>
+        <div class="form-group">
+          <label class="check-label"><input type="checkbox" id="onboardEmailNotif" checked> Enable email notifications</label>
+        </div>
+        <div class="step-btns"><button class="btn-secondary" onclick="prevStep(3)"><i class="fas fa-arrow-left"></i> Back</button><button class="btn-auth" onclick="completeOnboarding()"><i class="fas fa-check"></i> Complete Setup</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ EMPLOYEE DASHBOARD ══════════ -->
+<div id="employeeDashboard" class="page">
+  <aside class="emp-sidebar" id="empSidebar">
+    <div class="emp-sidebar-top">
+      <div class="emp-user-block">
+        <div class="emp-ava"><i class="fas fa-user"></i></div>
+        <div class="emp-user-info"><h4 id="empUserName">User</h4><span class="role-pill-emp">Employee</span></div>
+      </div>
+    </div>
+    <nav class="emp-nav">
+      <div class="emp-nav-item active" onclick="empNav('home',this)"><i class="fas fa-home"></i><span>Home</span></div>
+      <div class="emp-nav-item" onclick="empNav('expenses',this)"><i class="fas fa-credit-card"></i><span>Expenses</span></div>
+      <div class="emp-nav-item" onclick="empNav('trips',this)"><i class="fas fa-plane"></i><span>Trips</span></div>
+      <div class="emp-nav-item" onclick="empNav('myapprovals',this)"><i class="fas fa-clock"></i><span>My Approvals</span></div>
+      <div class="emp-nav-item" onclick="empNav('settings',this)"><i class="fas fa-cog"></i><span>Settings</span></div>
+      <div class="emp-nav-item" onclick="empNav('support',this)"><i class="fas fa-headset"></i><span>Support</span></div>
+    </nav>
+    <div class="emp-sidebar-foot">
+      <div class="emp-nav-item" onclick="empNav('profile',this)"><i class="fas fa-user-circle"></i><span>Profile</span></div>
+      <div class="emp-brand">⇄ EXP<span>ensio</span></div>
+    </div>
+  </aside>
+  <main class="emp-main" id="empMain">
+    <div class="emp-topbar">
+      <button class="sidebar-toggle" onclick="toggleEmpSidebar()"><i class="fas fa-bars"></i></button>
+      <div style="flex:1"></div>
+      <button class="btn-logout" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+    <div class="emp-content-area">
+      <div id="empHome"        class="emp-page active"></div>
+      <div id="empExpenses"    class="emp-page"></div>
+      <div id="empTrips"       class="emp-page"></div>
+      <div id="empMyapprovals" class="emp-page"></div>
+      <div id="empSettings"    class="emp-page"></div>
+      <div id="empSupport"     class="emp-page"></div>
+      <div id="empProfile"     class="emp-page"></div>
+    </div>
+  </main>
+</div>
+
+<!-- ══════════ MANAGER DASHBOARD ══════════ -->
+<div id="managerDashboard" class="page">
+  <aside class="mgr-sidebar" id="mgrSidebar">
+    <div class="mgr-logo-area">
+      <div class="mgr-logo-icon">M</div>
+    </div>
+    <nav class="mgr-nav">
+      <div class="mgr-nav-label">MAIN</div>
+      <div class="mgr-nav-item active" onclick="mgrNav('overview',this)"><i class="fas fa-th-large"></i><span>Overview</span></div>
+      <div class="mgr-nav-item" onclick="mgrNav('pending',this)"><i class="fas fa-clock"></i><span>Pending</span><span class="mgr-count" id="mgrPendingCount">0</span></div>
+      <div class="mgr-nav-item" onclick="mgrNav('history',this)"><i class="fas fa-history"></i><span>History</span></div>
+      <div class="mgr-nav-item" onclick="mgrNav('employees',this)"><i class="fas fa-users"></i><span>Employees</span></div>
+      <div class="mgr-nav-label" style="margin-top:16px;">REPORTS</div>
+      <div class="mgr-nav-item" onclick="mgrNav('analytics',this)"><i class="fas fa-chart-bar"></i><span>Analytics</span></div>
+    </nav>
+    <div class="mgr-sidebar-foot">
+      <div class="mgr-nav-item" onclick="mgrNav('mgrsettings',this)"><i class="fas fa-cog"></i><span>Settings</span></div>
+      <div class="mgr-nav-item" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></div>
+    </div>
+  </aside>
+  <main class="mgr-main">
+    <div class="mgr-topbar">
+      <div><h2 class="mgr-title" id="mgrTitle">Overview</h2><p class="mgr-sub" id="mgrSub">Your expense management summary</p></div>
+      <div class="mgr-user-block">
+        <span id="mgrUserDisplay"></span>
+        <div class="mgr-ava" id="mgrAva">M</div>
+      </div>
+    </div>
+    <div class="mgr-content-area">
+      <div id="mgrOverview"    class="mgr-page active"></div>
+      <div id="mgrPending"     class="mgr-page"></div>
+      <div id="mgrHistory"     class="mgr-page"></div>
+      <div id="mgrEmployees"   class="mgr-page"></div>
+      <div id="mgrAnalytics"   class="mgr-page"></div>
+      <div id="mgrMgrsettings" class="mgr-page"></div>
+    </div>
+  </main>
+</div>
+
+<!-- ══════════ MODALS ══════════ -->
+<!-- Add Expense -->
+<div id="expenseModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-hdr"><h3>Submit New Expense</h3><button class="modal-x" onclick="closeModal('expenseModal')">×</button></div>
+    <div class="form-group"><label>Subject <span class="req">*</span></label><div class="input-wrap"><i class="fas fa-tag"></i><input type="text" id="expSubject" placeholder="e.g. Office Supplies"></div></div>
+    <div class="form-group"><label>Category</label><div class="input-wrap"><i class="fas fa-folder"></i><select id="expCategory" class="sel-pad"><option>Supplies</option><option>Meals</option><option>Travel</option><option>Technology</option><option>Marketing</option><option>Other</option></select></div></div>
+    <div class="two-col-grid">
+      <div class="form-group"><label>Amount (€) <span class="req">*</span></label><div class="input-wrap"><i class="fas fa-euro-sign"></i><input type="number" id="expAmount" placeholder="0.00" step="0.01"></div></div>
+      <div class="form-group"><label>Date <span class="req">*</span></label><div class="input-wrap"><i class="fas fa-calendar"></i><input type="date" id="expDate"></div></div>
+    </div>
+    <div class="form-group">
+      <label>Receipt / Bill <span class="req">* Required</span></label>
+      <div class="upload-zone" onclick="document.getElementById('expReceipt').click()">
+        <i class="fas fa-cloud-upload-alt"></i><p>Click to upload receipt</p><small>JPG, PNG, PDF — max 5MB</small>
+      </div>
+      <input type="file" id="expReceipt" accept="image/*,.pdf" style="display:none" onchange="previewReceipt(this)">
+      <div id="receiptPreview"></div>
+    </div>
+    <p class="info-note"><i class="fas fa-info-circle"></i> Expense goes to manager for approval automatically.</p>
+    <button class="btn-auth" onclick="submitExpense()"><i class="fas fa-paper-plane"></i> Submit Expense</button>
+  </div>
+</div>
+
+<!-- Add Trip -->
+<div id="tripModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-hdr"><h3>Plan New Trip</h3><button class="modal-x" onclick="closeModal('tripModal')">×</button></div>
+    <div class="form-group"><label>Destination</label><div class="input-wrap"><i class="fas fa-map-marker-alt"></i><input type="text" id="tripDest" placeholder="e.g. London, UK"></div></div>
+    <div class="form-group"><label>Purpose</label><div class="input-wrap"><i class="fas fa-bullseye"></i><input type="text" id="tripPurpose" placeholder="e.g. Business Conference"></div></div>
+    <div class="two-col-grid">
+      <div class="form-group"><label>Start Date</label><div class="input-wrap"><i class="fas fa-calendar"></i><input type="date" id="tripStart"></div></div>
+      <div class="form-group"><label>End Date</label><div class="input-wrap"><i class="fas fa-calendar"></i><input type="date" id="tripEnd"></div></div>
+    </div>
+    <div class="form-group"><label>Budget (€)</label><div class="input-wrap"><i class="fas fa-euro-sign"></i><input type="number" id="tripBudget" placeholder="0.00" step="0.01"></div></div>
+    <button class="btn-auth" onclick="submitTrip()"><i class="fas fa-plane"></i> Plan Trip</button>
+  </div>
+</div>
+
+<!-- Receipt Viewer -->
+<div id="receiptViewModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:640px;">
+    <div class="modal-hdr">
+      <div><h3 id="rvTitle">Receipt</h3><p id="rvSub" style="font-size:13px;color:var(--muted);margin-top:2px;"></p></div>
+      <button class="modal-x" onclick="closeModal('receiptViewModal')">×</button>
+    </div>
+    <div id="rvContent" style="background:#181c24;border-radius:10px;overflow:hidden;min-height:120px;display:flex;align-items:center;justify-content:center;"></div>
+    <div id="rvActions" style="display:flex;gap:10px;margin-top:16px;"></div>
+  </div>
+</div>
+
+<!-- Reject Reason -->
+<div id="rejectModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:440px;">
+    <div class="modal-hdr"><h3>Reject Expense</h3><button class="modal-x" onclick="closeModal('rejectModal')">×</button></div>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:12px;">Optionally provide a reason (shown to the employee):</p>
+    <textarea id="rejectReason" class="reason-ta" placeholder="e.g. Receipt unclear, exceeds policy limit..."></textarea>
+    <div style="display:flex;gap:10px;margin-top:16px;">
+      <button class="btn-danger" style="flex:1;" onclick="confirmReject()"><i class="fas fa-times"></i> Confirm Reject</button>
+      <button class="btn-secondary" onclick="closeModal('rejectModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Employee Detail -->
+<div id="empDetailModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div><h3 id="empDetailName"></h3><p id="empDetailEmail" style="font-size:13px;color:var(--muted);margin-top:2px;"></p></div>
+      <button class="modal-x" onclick="closeModal('empDetailModal')">×</button>
+    </div>
+    <div id="empDetailContent"></div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toastWrap"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

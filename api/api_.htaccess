@@ -1,0 +1,6 @@
+Options -Indexes
+
+<FilesMatch "^(config|auth)\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>

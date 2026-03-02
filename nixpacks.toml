@@ -1,0 +1,8 @@
+# nixpacks.toml
+# Tells Railway: "this is a PHP app, serve it with Apache"
+
+[phases.setup]
+nixPkgs = ["php82", "php82Extensions.mysqli", "php82Extensions.mbstring", "php82Extensions.pdo", "php82Extensions.pdo_mysql", "apache"]
+
+[start]
+cmd = "apache2ctl -D FOREGROUND"

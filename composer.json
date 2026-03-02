@@ -1,0 +1,13 @@
+{
+  "name": "expensio/app",
+  "description": "Expense.io - Smart Expense Management",
+  "type": "project",
+  "require": {
+    "php": ">=8.0"
+  },
+  "require-dev": {},
+  "scripts": {},
+  "config": {
+    "optimize-autoloader": true
+  }
+}
